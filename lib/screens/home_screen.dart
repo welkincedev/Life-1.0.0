@@ -45,6 +45,7 @@ class HomeScreen extends StatelessWidget {
                           MaterialPageRoute(
                             builder: (_) => BookDetailsScreen(
                               book: book,
+                              isEditable: true,
                               onFavoriteToggle: () {
                                 onUpdate?.call();
                               },
@@ -102,6 +103,7 @@ class HomeScreen extends StatelessWidget {
                                 MaterialPageRoute(
                                   builder: (_) => BookDetailsScreen(
                                     book: book,
+                                    isEditable: true,
                                     onFavoriteToggle: () => onUpdate?.call(),
                                     onStatusUpdate: (_) => onUpdate?.call(),
                                   ),

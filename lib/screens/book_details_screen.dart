@@ -4,8 +4,8 @@ import '../models/book.dart';
 class BookDetailsScreen extends StatelessWidget {
   final Book book;
   final VoidCallback? onFavoriteToggle;
-  final Function(String)? onStatusUpdate;
-  final bool isEditable; // 👈 NEW
+  final ValueChanged<String>? onStatusUpdate;
+  final bool isEditable;
 
   const BookDetailsScreen({
     super.key,
@@ -28,8 +28,7 @@ class BookDetailsScreen extends StatelessWidget {
               child: Image.network(
                 book.image,
                 height: 200,
-                errorBuilder: (context, error, stackTrace) =>
-                    const Icon(Icons.book, size: 100),
+                errorBuilder: (_, __, ___) => const Icon(Icons.book, size: 100),
               ),
             ),
             const SizedBox(height: 16),
@@ -49,8 +48,8 @@ class BookDetailsScreen extends StatelessWidget {
 
             const Spacer(),
 
-            // 🔒 SHOW ACTIONS ONLY IF EDITABLE
-            if (isEditable) ...[
+            /// 🔒 Editable actions
+            if (isEditable)
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -59,7 +58,7 @@ class BookDetailsScreen extends StatelessWidget {
                       book.isFavorite ? Icons.favorite : Icons.favorite_border,
                       color: Colors.red,
                     ),
-                    onPressed: onFavoriteToggle,
+                    onPressed: onFavoriteToggle?.call,
                   ),
                   DropdownButton<String>(
                     value: book.readingStatus.isEmpty
@@ -80,16 +79,19 @@ class BookDetailsScreen extends StatelessWidget {
                         child: Text('Completed'),
                       ),
                     ],
-                    onChanged: onStatusUpdate,
+                    onChanged: (value) {
+                      if (value != null) {
+                        onStatusUpdate?.call(value);
+                      }
+                    },
                   ),
                 ],
-              ),
-            ] else ...[
+              )
+            else
               const Text(
                 'Add this book to your shelf to mark as favorite or update reading status.',
                 style: TextStyle(color: Colors.grey),
               ),
-            ],
           ],
         ),
       ),

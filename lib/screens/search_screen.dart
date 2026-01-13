@@ -101,6 +101,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     MaterialPageRoute(
                       builder: (_) => BookDetailsScreen(
                         book: book,
+                        isEditable: true,
                         onFavoriteToggle: () {},
                         onStatusUpdate: (_) {},
                       ),

@@ -68,6 +68,7 @@ class _ShelfScreenState extends State<ShelfScreen> {
                         MaterialPageRoute(
                           builder: (_) => BookDetailsScreen(
                             book: book,
+                            isEditable: true,
                             onFavoriteToggle: () => toggleFavorite(book),
                             onStatusUpdate: (status) =>
                                 updateReadingStatus(book, status),
